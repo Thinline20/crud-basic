@@ -1,0 +1,87 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import "overlayscrollbars/overlayscrollbars.css";
+import { Toaster } from "solid-sonner";
+
+import ScrollToTop from "~/components/ScrollToTop.astro";
+import Navbar from "~/components/navbar/Navbar.astro";
+import "~/styles/root.css";
+
+interface Props {
+  title?: string;
+  useTransitions?: boolean;
+}
+
+const { title = "Uta Tools", useTransitions = false } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link href="/favicon.png" rel="icon" type="image/svg+xml" />
+    <meta content="width=device-width" name="viewport" />
+    <meta content={Astro.generator} name="generator" />
+    {useTransitions && <ViewTransitions />}
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="relative bg-background" id="app">
+      <Navbar /><div class="container px-4 md:px-6"><slot /></div>
+      <Toaster
+        class="toaster group"
+        client:load
+        position="bottom-right"
+        toastOptions={{
+          class:
+            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
+          descriptionClass: "group-[.toast]:text-muted-foreground",
+        }}
+      />
+      <ScrollToTop />
+    </div>
+  </body>
+  <script>
+    import { OverlayScrollbars } from "overlayscrollbars";
+
+    OverlayScrollbars(document.body, {
+      scrollbars: {
+        autoHide: "scroll",
+      },
+    });
+  </script>
+  <script is:inline>
+    function setTheme(document) {
+      const getThemePreference = () => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
+        }
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      };
+      const isDark = getThemePreference() === "dark";
+
+      document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+      if (typeof localStorage !== "undefined") {
+        const observer = new MutationObserver(() => {
+          const isDark = document.documentElement.classList.contains("dark");
+          localStorage.setItem("theme", isDark ? "dark" : "light");
+        });
+        observer.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
+      }
+    }
+
+    setTheme(document);
+
+    document.documentElement.addEventListener("astro:before-swap", (event) => {
+      setTheme(event.newDocument);
+    });
+  </script>
+</html>

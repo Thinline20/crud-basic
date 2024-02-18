@@ -1,0 +1,12 @@
+{
+    "prettier.configPath": ".prettierrc",
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "eslint.runtime": "node",
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "astro",
+        "typescript",
+        "typescriptreact"
+    ]
+}
