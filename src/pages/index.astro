@@ -1,8 +1,32 @@
 ---
-import Editor from "~/components/editor";
+import { desc } from "drizzle-orm";
+
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import { db } from "~/server/db";
+import { articles } from "~/server/db/schema";
+
+const articleList = await db
+  .select({
+    createdAt: articles.createdAt,
+    id: articles.id,
+    title: articles.title,
+  })
+  .from(articles)
+  .orderBy(desc(articles.createdAt))
+  .limit(10);
 ---
 
 <BaseLayout>
-  <Editor client:load />
+  <a href="/board/write">글쓰기</a>
+  <div>
+    {
+      // eslint-disable-next-line solid/prefer-for
+      articleList.map((article) => (
+        <div>
+          <a href={`/board/articles/${article.id}`}>{article.title}</a>
+          <p>{article.createdAt}</p>
+        </div>
+      ))
+    }
+  </div>
 </BaseLayout>

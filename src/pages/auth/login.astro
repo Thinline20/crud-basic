@@ -1,0 +1,25 @@
+---
+import LoginForm from "~/components/login-form";
+import { Separator } from "~/components/ui/separator";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+const session = Astro.locals.session;
+
+if (session !== null) {
+  return Astro.redirect("/");
+}
+---
+
+<BaseLayout>
+  <div class="mx-auto mt-16 max-w-4xl rounded-md border p-8 shadow-md">
+    <h1 class="text-2xl font-semibold">Login</h1>
+    <LoginForm client:load />
+    <Separator class="my-4" />
+    <p class="text-right">
+      Don't have an account? <a
+        class="text-blue-500 hover:text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+        href="/auth/signup">Register</a
+      >
+    </p>
+  </div>
+</BaseLayout>

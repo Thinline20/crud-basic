@@ -1,0 +1,20 @@
+---
+import WriteForm from "~/components/board/write-form";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+if (Astro.locals.session === null) {
+  return Astro.redirect("/auth/login");
+}
+
+const user = Astro.locals.user;
+
+if (user === null) {
+  return Astro.redirect("/auth/login");
+}
+---
+
+<BaseLayout>
+  <div>
+    <WriteForm client:load userId={user.id} />
+  </div>
+</BaseLayout>

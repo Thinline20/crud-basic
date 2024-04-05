@@ -12,7 +12,7 @@ export default defineConfig({
   output: "server",
   vite: {
     optimizeDeps: {
-      exclude: ["oslo"],
+      exclude: ["oslo", "lucia-auth-adapter-surrealdb"],
     },
   },
 });

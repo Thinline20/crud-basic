@@ -1,1 +1,3 @@
 .eslintrc.*
+tailwind.config.*
+src/components/ui/*.tsx

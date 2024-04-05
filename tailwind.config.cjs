@@ -3,7 +3,9 @@ export default {
   content: ["./src/**/*.{astro,js,jsx,ts,tsx}"],
   darkMode: ["class"],
   plugins: [
+    require("@tailwindcss/container-queries"),
     require("@tailwindcss/typography"),
+    require("tailwind-scrollbar"),
     require("@kobalte/tailwindcss"),
   ],
   presets: [require("./ui.preset.js")],
@@ -44,11 +46,18 @@ export default {
             "--tw-prose-quotes": theme("colors.foreground"),
             // "--tw-prose-td-borders": theme("colors.pink[200]"),
             // "--tw-prose-th-borders": theme("colors.pink[300]"),
+            p: {
+              margin: 0,
+            },
             li: {
               margin: "0",
               p: {
                 margin: 0,
               },
+            },
+            hr: {
+              marginTop: "1rem",
+              marginBottom: "1rem",
             },
           },
         },

@@ -1,0 +1,59 @@
+---
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import { Separator } from "~/components/ui/separator";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <div class="mx-auto mt-16 max-w-4xl rounded-md border p-8 shadow-md">
+    <h1 class="text-2xl font-semibold">Sign Up</h1>
+    <form action="/api/auth/signup" class="mt-8" data-astro-reload method="post">
+      <div class="flex flex-col gap-4">
+        <div>
+          <Label for="id">ID</Label>
+          <Input id="id" maxLength={31} minLength={4} name="id" pattern="[a-z0-9]{4,31}" required type="text" />
+        </div>
+        <div>
+          <Label for="password">Password</Label>
+          <Input
+            id="password"
+            maxLength={255}
+            minLength={14}
+            name="password"
+            pattern="[!@#$%^&*()_+a-zA-Z0-9]{14,255}"
+            required
+            type="password"
+          />
+        </div>
+        <div>
+          <Label for="username">Username</Label>
+          <Input
+            id="username"
+            maxLength={255}
+            minLength={3}
+            name="username"
+            pattern="[a-zA-Z0-9]{3,255}"
+            required
+            type="text"
+          />
+        </div>
+        <div>
+          <Label for="email">Email</Label>
+          <Input id="email" name="email" required type="email" />
+        </div>
+        <flex class="mt-4 flex justify-end space-x-4">
+          <Button type="reset" variant="muted">Clear</Button>
+          <Button>Send</Button>
+        </flex>
+      </div>
+    </form>
+    <Separator class="my-4" />
+    <p class="text-right">
+      Already have account? <a
+        class="text-blue-500 hover:text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+        href="/auth/login">Sign in</a>
+    </p>
+  </div>
+</BaseLayout>

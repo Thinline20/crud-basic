@@ -1,0 +1,17 @@
+---
+import { IoHomeOutline } from "solid-icons/io";
+
+import { Button } from "~/components/ui/button";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <div class="mx-auto mt-8 flex w-full max-w-md flex-col gap-8 rounded-lg px-4 py-8 shadow-md ring-1 ring-foreground/5">
+    <h1 class="text-center text-3xl font-bold">Page Not Found</h1>
+    <p>Sorry, we couldn't find the page you were looking for.</p>
+    <p class="grid place-content-center">
+      <Button variant="shine"
+        ><a class="flex gap-1" href="/"><IoHomeOutline class="h-[1.2rem] w-[1.2rem]" /><span class="font-bold">Go to Home</span></a></Button>
+    </p>
+  </div>
+</BaseLayout>

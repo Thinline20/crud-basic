@@ -1,0 +1,39 @@
+---
+import { eq } from "drizzle-orm";
+
+import type { Article } from "~/server/db/schema";
+
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { db } from "~/server/db";
+import { articles } from "~/server/db/schema";
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect("/404");
+}
+
+let posts: Article[];
+
+try {
+  posts = await db
+    .select()
+    .from(articles)
+    .where(eq(articles.id, BigInt(slug)));
+
+  if (!posts.length) {
+    return Astro.redirect("/404");
+  }
+} catch {
+  return Astro.redirect("/404");
+}
+
+const post = posts[0];
+---
+
+<BaseLayout>
+  <div>
+    <h1>{post.title}</h1>
+    <p>{post.content}</p>
+  </div>
+</BaseLayout>
